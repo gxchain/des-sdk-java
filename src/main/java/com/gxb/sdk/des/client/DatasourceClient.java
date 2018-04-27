@@ -3,6 +3,7 @@ package com.gxb.sdk.des.client;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.gxb.sdk.des.api.DataSourceApi;
+import com.gxb.sdk.des.model.dto.ResponseObject;
 import com.gxb.sdk.des.model.param.HeartbeatReq;
 import com.gxchain.common.signature.MsgCryptUtil;
 import com.gxchain.common.signature.SignatureUtil;
@@ -61,28 +62,20 @@ public class DatasourceClient extends DESClient {
     /**
      * 加密数据
      *
-     * @param data      结果数据
-     * @param publicKey 商户公钥
-     * @return {data:"加密数据"}
-     */
-    public JSONObject encrypt(JSONObject data, String publicKey) {
-        if (data == null) {
-            return noneData();
-        }
-        //加密
-        JSONObject result = new JSONObject();
-        result.put("data", MsgCryptUtil.encrypt(getPrivateKey(), publicKey, data.toJSONString()));
-        return result;
-    }
-
-    /**
-     * 数据源不返回数据的反馈
-     *
+     * @param responseObject 结果数据
+     * @param publicKey      商户公钥
      * @return
      */
-    public JSONObject noneData() {
-        JSONObject result = new JSONObject();
-        result.put("data", "");
-        return result;
+    public ResponseObject encrypt(ResponseObject responseObject, String publicKey) {
+        if (responseObject == null) {
+            return ResponseObject.builder().success(false).build();
+        }
+        //成功,加密数据;
+        if (responseObject.isSuccess() && responseObject.getData() != null) {
+            responseObject.setData(MsgCryptUtil.encrypt(getPrivateKey(), publicKey, JSON.toJSONString(responseObject.getData())));
+        }else{
+            responseObject.setSuccess(false);
+        }
+        return responseObject;
     }
 }
