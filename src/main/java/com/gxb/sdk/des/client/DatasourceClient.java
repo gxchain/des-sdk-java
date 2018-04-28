@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.gxb.sdk.des.api.DataSourceApi;
 import com.gxb.sdk.des.model.dto.ResponseObject;
+import com.gxb.sdk.des.model.param.DataRequestParam;
 import com.gxb.sdk.des.model.param.HeartbeatReq;
 import com.gxchain.common.signature.MsgCryptUtil;
 import com.gxchain.common.signature.SignatureUtil;
@@ -48,13 +49,12 @@ public class DatasourceClient extends DESClient {
     /**
      * 解密请求参数
      *
-     * @param params    加密参数
-     * @param publicKey 商户公钥
+     * @param dataRequestParam 请求参数
      * @return 解密结果
      */
-    public JSONObject decrypt(String params, String publicKey) {
+    public JSONObject decrypt(DataRequestParam dataRequestParam) {
         //解密
-        String paramJson = MsgCryptUtil.decrypt(getPrivateKey(), publicKey, params);
+        String paramJson = MsgCryptUtil.decrypt(getPrivateKey(), dataRequestParam.getPublicKey(), dataRequestParam.getParams());
         JSONObject jsonObject = JSON.parseObject(paramJson);
         return jsonObject.getJSONObject("params");
     }

@@ -14,6 +14,5 @@ public enum DataExchangeDetailStatusEnum {
     QUERY_FAIL,//数据源查询数据失败
     TIMEOUT ,//请求超时
     PROXY_TRANSFER_ERROR,//代理转账失败
-    DATASOURCE_OFFLINE //数据源离线
     ;
 }
