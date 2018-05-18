@@ -30,4 +30,8 @@ public class DataRequestParam {
      * 产品id
      */
     private Integer productId;
+    /**
+     * 商户账号id
+     */
+    private String merchantAccountId;
 }
