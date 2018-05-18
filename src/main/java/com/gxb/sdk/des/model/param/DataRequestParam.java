@@ -19,6 +19,10 @@ public class DataRequestParam {
      */
     private String params;
     /**
+     * 加解密随机数
+     */
+    private Long nonce;
+    /**
      * 公钥
      */
     private String publicKey;

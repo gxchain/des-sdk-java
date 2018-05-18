@@ -18,14 +18,16 @@ import com.gxchain.common.signature.MsgCryptUtil;
 import com.gxchain.common.signature.SignatureUtil;
 import com.gxchain.common.signature.utils.Util;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.RandomUtils;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import retrofit2.Response;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 商户客户端
@@ -37,7 +39,6 @@ public class MerchantClient extends DESClient {
     private static final Logger logger = LoggerFactory.getLogger(MerchantClient.class);
     MerchantApi merchantApi;
     DataSourceApi dataSourceApi;
-    Map<String, String> datasourcePublickeyMap = new HashMap<>();
 
     public MerchantClient(String privateKey, String accountId) {
         super(privateKey, accountId);
@@ -96,10 +97,12 @@ public class MerchantClient extends DESClient {
             requestParams.setAmount(amount);
             requestParams.setSignatures(Arrays.asList(this.signature(requestParams, this.getPrivateKey())));//request_params结构体签名
             req.setRequestParams(requestParams);
-            req.setParams(MsgCryptUtil.encrypt(getPrivateKey(), datasourceAccount.getPublicKey(), param.toJSONString()));//加密请求参数
+
+            req.setNonce(RandomUtils.nextLong(0L, Long.MAX_VALUE));
+
+            req.setParams(MsgCryptUtil.encrypt(getPrivateKey(), datasourceAccount.getPublicKey(), req.getNonce(), param.toJSONString()));//加密请求参数
             dataExchangeReqList.add(req);
 
-            datasourcePublickeyMap.put(datasourceAccount.getAccountId(), datasourceAccount.getPublicKey());
         }
         //发送创建交易的请求
         logger.info("创建数据交易请求");
@@ -180,12 +183,7 @@ public class MerchantClient extends DESClient {
                     if (!"SUCCESS".equals(dataExchangeDetail.getStatus().name())) {
                         continue;
                     }
-                    String publicKey = datasourcePublickeyMap.get(dataExchangeDetail.getDatasource());
-                    if (StringUtils.isBlank(publicKey)) {
-                        publicKey = dataSourceApi.selectDataSourcePublicKey(dataExchangeDetail.getDatasource()).execute().body();
-                        datasourcePublickeyMap.put(dataExchangeDetail.getDatasource(), publicKey);
-                    }
-                    dataExchangeDetail.setData(MsgCryptUtil.decrypt(getPrivateKey(), publicKey, dataExchangeDetail.getData()));
+                    dataExchangeDetail.setData(MsgCryptUtil.decrypt(getPrivateKey(), dataExchangeDetail.getDatasourcePublicKey(), dataExchangeDetail.getNonce(), dataExchangeDetail.getData()));
                 }
                 return dataExchange;
             }

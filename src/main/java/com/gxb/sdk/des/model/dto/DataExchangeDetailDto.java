@@ -1,14 +1,17 @@
 package com.gxb.sdk.des.model.dto;
 
 import com.gxb.sdk.des.model.enums.DataExchangeDetailStatusEnum;
+import lombok.Data;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 
 /**
  * 数据交易明细数据
  * @author liruobin
  * @since 2018/3/27 下午9:53
  */
+@Data
 public class DataExchangeDetailDto implements Serializable {
 
     private static final long serialVersionUID = -7431809969000679692L;
@@ -29,47 +32,16 @@ public class DataExchangeDetailDto implements Serializable {
      */
     private String data;
     /**
+     * 数据源
+     */
+    private Long nonce;
+    /**
      * 区块id
      */
     private String txid;
+    /**
+     * 数据源公钥
+     */
+    private String datasourcePublicKey;
 
-    public DataExchangeDetailStatusEnum getStatus() {
-        return status;
-    }
-
-    public void setStatus(DataExchangeDetailStatusEnum status) {
-        this.status = status;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    public String getDatasource() {
-        return datasource;
-    }
-
-    public void setDatasource(String datasource) {
-        this.datasource = datasource;
-    }
-
-    public String getData() {
-        return data;
-    }
-
-    public void setData(String data) {
-        this.data = data;
-    }
-
-    public String getTxid() {
-        return txid;
-    }
-
-    public void setTxid(String txid) {
-        this.txid = txid;
-    }
 }

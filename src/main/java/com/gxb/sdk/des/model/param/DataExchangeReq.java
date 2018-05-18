@@ -1,5 +1,7 @@
 package com.gxb.sdk.des.model.param;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
@@ -7,6 +9,7 @@ import java.io.Serializable;
  * @author liruobin
  * @since 2018/3/23 下午1:27
  */
+@Data
 public class DataExchangeReq implements Serializable {
     private static final long serialVersionUID = 377073303221867266L;
     /**
@@ -14,24 +17,11 @@ public class DataExchangeReq implements Serializable {
      */
     private String params;
     /**
+     * 加解密随机数
+     */
+    private Long nonce;
+    /**
      *
      */
     private RequestParams requestParams;
-
-
-    public String getParams() {
-        return params;
-    }
-
-    public void setParams(String params) {
-        this.params = params;
-    }
-
-    public RequestParams getRequestParams() {
-        return requestParams;
-    }
-
-    public void setRequestParams(RequestParams requestParams) {
-        this.requestParams = requestParams;
-    }
 }

@@ -54,7 +54,7 @@ public class DatasourceClient extends DESClient {
      */
     public JSONObject decrypt(DataRequestParam dataRequestParam) {
         //解密
-        String paramJson = MsgCryptUtil.decrypt(getPrivateKey(), dataRequestParam.getPublicKey(), dataRequestParam.getParams());
+        String paramJson = MsgCryptUtil.decrypt(getPrivateKey(), dataRequestParam.getPublicKey(), dataRequestParam.getNonce(), dataRequestParam.getParams());
         JSONObject jsonObject = JSON.parseObject(paramJson);
         return jsonObject.getJSONObject("params");
     }
@@ -63,17 +63,17 @@ public class DatasourceClient extends DESClient {
      * 加密数据
      *
      * @param responseObject 结果数据
-     * @param publicKey      商户公钥
+     * @param dataRequestParam  请求入参
      * @return
      */
-    public ResponseObject encrypt(ResponseObject responseObject, String publicKey) {
+    public ResponseObject encrypt(ResponseObject responseObject, DataRequestParam dataRequestParam) {
         if (responseObject == null) {
             return ResponseObject.builder().success(false).build();
         }
         //成功,加密数据;
         if (responseObject.isSuccess() && responseObject.getData() != null) {
-            responseObject.setData(MsgCryptUtil.encrypt(getPrivateKey(), publicKey, JSON.toJSONString(responseObject.getData())));
-        }else{
+            responseObject.setData(MsgCryptUtil.encrypt(getPrivateKey(), dataRequestParam.getPublicKey(), dataRequestParam.getNonce(), JSON.toJSONString(responseObject.getData())));
+        } else {
             responseObject.setSuccess(false);
         }
         return responseObject;
