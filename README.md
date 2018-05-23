@@ -1,7 +1,7 @@
 # des-sdk
 data exchange service sdk
 
-#Install
+# Install
 dependency setting：
 ```
 Added to the maven settings.xml
@@ -18,7 +18,7 @@ Added to the pom.xml
     <version>1.0.4-RELEASE</version>
 </dependency>
 ```
-#Usage
+# Usage
 ### merchant
 ```
 //1、initializing
@@ -58,5 +58,5 @@ public Object queryData(@RequestBody DataRequestParam requestParam) {
 }
 ```
 
-#Dev Document
+# Dev Document
 https://doc.gxb.io/des/
