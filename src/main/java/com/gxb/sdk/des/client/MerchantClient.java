@@ -19,6 +19,7 @@ import com.gxchain.common.signature.SignatureUtil;
 import com.gxchain.common.signature.utils.Util;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.RandomUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,6 +81,9 @@ public class MerchantClient extends DESClient {
         logger.debug("开始组织请求参数");
         long expiration = DateTime.now().plusMinutes(30).toDate().getTime() / 1000;
         for (AccountInfo datasourceAccount : productResult.getOnlineDatasources()) {
+            if (StringUtils.equals(this.getAccountId(), datasourceAccount.getAccountId())) {
+                continue;
+            }
             //组织请求参数
             DataExchangeReq req = new DataExchangeReq();
             RequestParams requestParams = new RequestParams();
