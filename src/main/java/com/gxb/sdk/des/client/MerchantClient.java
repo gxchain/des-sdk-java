@@ -28,6 +28,7 @@ import retrofit2.Response;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -107,6 +108,9 @@ public class MerchantClient extends DESClient {
             req.setParams(MsgCryptUtil.encrypt(getPrivateKey(), datasourceAccount.getPublicKey(), req.getNonce(), param.toJSONString()));//加密请求参数
             dataExchangeReqList.add(req);
 
+        }
+        if(dataExchangeReqList.isEmpty()){
+            throw new GxbApiException(ExceptionEnum.DATASOURCE_OFFLINE);
         }
         //发送创建交易的请求
         logger.info("创建数据交易请求");
