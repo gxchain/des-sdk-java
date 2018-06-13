@@ -34,10 +34,19 @@ public class BlacklistUtil {
      * @return NORMAL 正常,M(X)
      */
     public static String getOverdueMonth(Date overdueDate) {
-        int dayDiff = Days.daysBetween(new DateTime(overdueDate), DateTime.now()).getDays();
-        if (dayDiff <= 0) {
+        int dayDiff = Days.daysBetween(new DateTime(overdueDate).withTimeAtStartOfDay(), DateTime.now()).getDays();
+        return getOverdueMonth(dayDiff);
+    }
+
+    /**
+     * 将逾期天数转换为M(X), X=1,2..N, X=roundup(逾期天数/30)，如逾期10天=M(1)
+     * @param overdueDays 逾期天数
+     * @return NORMAL 正常,M(X)
+     */
+    public static String getOverdueMonth(int overdueDays) {
+        if (overdueDays <= 0) {
             return "NORMAL";
         }
-        return String.format("M(%s)", new BigDecimal(dayDiff).divide(new BigDecimal(30),0, RoundingMode.UP));
+        return String.format("M(%s)", new BigDecimal(overdueDays).divide(new BigDecimal(30),0, RoundingMode.UP));
     }
 }
