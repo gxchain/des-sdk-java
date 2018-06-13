@@ -23,7 +23,7 @@ public class BlacklistGatewayClient extends DESClient {
     private BlacklistGatewayApi blacklistGatewayApi;
 
     public BlacklistGatewayClient(String privateKey, String accountId) {
-        super(privateKey, accountId);
+        super(privateKey, accountId, "https://survey.gxb.io");
         blacklistGatewayApi = gxbApiFactory.newApi(BlacklistGatewayApi.class);
     }
 
@@ -56,6 +56,7 @@ public class BlacklistGatewayClient extends DESClient {
 
     /**
      * 获取答题报告
+     *
      * @param token 答题token
      * @return
      * @throws IOException
