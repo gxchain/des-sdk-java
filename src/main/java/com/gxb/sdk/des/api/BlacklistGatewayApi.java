@@ -21,7 +21,7 @@ public interface BlacklistGatewayApi {
      * @param param
      * @return
      */
-    @POST("/api/blacklist/token")
+    @POST("/blacklist/token")
     Call<QuestionTokenResult> getToken(@Body GetTokenParam param);
 
     /**
@@ -29,6 +29,6 @@ public interface BlacklistGatewayApi {
      * @param param
      * @return
      */
-    @POST("/api/blacklist/question/report")
+    @POST("/blacklist/question/report")
     Call<List<QuestionReport>> getQuestionReport(@Body GetQuestionReportParam param);
 }
