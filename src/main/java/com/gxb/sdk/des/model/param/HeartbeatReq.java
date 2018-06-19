@@ -1,5 +1,7 @@
 package com.gxb.sdk.des.model.param;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -7,6 +9,7 @@ import java.util.List;
  * @author liruobin
  * @since 2018/3/26 上午10:10
  */
+@Data
 public class HeartbeatReq implements Serializable {
 
     private static final long serialVersionUID = 6249921560211030015L;
@@ -23,44 +26,16 @@ public class HeartbeatReq implements Serializable {
      */
     private Long timestamp;
     /**
+     * 数据源数据查询地址
+     */
+    private String queryUrl;
+    /**
      * 签名
      */
     private String signature;
 
-    public String toSignatureString(){
-        return String.format("%s|%s|%s",account,products,timestamp);
+    public String toSignatureString() {
+        return String.format("%s|%s|%s|%s", account, products, queryUrl, timestamp);
     }
 
-
-    public String getAccount() {
-        return account;
-    }
-
-    public void setAccount(String account) {
-        this.account = account;
-    }
-
-    public List<Integer> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Integer> products) {
-        this.products = products;
-    }
-
-    public Long getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(Long timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public String getSignature() {
-        return signature;
-    }
-
-    public void setSignature(String signature) {
-        this.signature = signature;
-    }
 }

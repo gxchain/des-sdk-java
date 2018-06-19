@@ -6,7 +6,7 @@
 
     <groupId>com.gxb.des</groupId>
     <artifactId>des-sdk</artifactId>
-    <version>1.0.5-RELEASE</version>
+    <version>1.0.6-RELEASE</version>
     <packaging>jar</packaging>
 
     <name>des-sdk</name>

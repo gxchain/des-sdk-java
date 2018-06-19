@@ -20,14 +20,33 @@ import java.util.List;
  */
 public class DatasourceClient extends DESClient {
     DataSourceApi dataSourceApi;
+    /**
+     * 数据源数据查询地址
+     */
+    private String queryUrl;
 
-    public DatasourceClient(String privateKey, String accountId) {
+    /**
+     *
+     * @param privateKey 私钥
+     * @param accountId 公链账户id
+     * @param queryUrl 查询地址
+     */
+    public DatasourceClient(String privateKey, String accountId, String queryUrl) {
         super(privateKey, accountId);
+        this.queryUrl = queryUrl;
         dataSourceApi = gxbApiFactory.newApi(DataSourceApi.class);
     }
 
-    public DatasourceClient(String privateKey, String accountId, String baseUrl) {
+    /**
+     *
+     * @param privateKey 私钥
+     * @param accountId 公链账户id
+     * @param queryUrl 查询地址
+     * @param baseUrl des服务地址
+     */
+    public DatasourceClient(String privateKey, String accountId, String queryUrl, String baseUrl) {
         super(privateKey, accountId, baseUrl);
+        this.queryUrl = queryUrl;
         dataSourceApi = gxbApiFactory.newApi(DataSourceApi.class);
     }
 
@@ -41,6 +60,7 @@ public class DatasourceClient extends DESClient {
         HeartbeatReq heartbeatReq = new HeartbeatReq();
         heartbeatReq.setAccount(this.getAccountId());
         heartbeatReq.setProducts(products);
+        heartbeatReq.setQueryUrl(queryUrl);
         heartbeatReq.setTimestamp(System.currentTimeMillis() + 3000L);
         heartbeatReq.setSignature(SignatureUtil.signature(heartbeatReq.toSignatureString(), this.getPrivateKey()));//加密签名
         dataSourceApi.heartBeat(heartbeatReq).execute();
@@ -62,8 +82,8 @@ public class DatasourceClient extends DESClient {
     /**
      * 加密数据
      *
-     * @param responseObject 结果数据
-     * @param dataRequestParam  请求入参
+     * @param responseObject   结果数据
+     * @param dataRequestParam 请求入参
      * @return
      */
     public ResponseObject encrypt(ResponseObject responseObject, DataRequestParam dataRequestParam) {
