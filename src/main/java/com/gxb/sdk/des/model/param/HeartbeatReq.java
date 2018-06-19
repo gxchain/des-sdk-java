@@ -1,5 +1,6 @@
 package com.gxb.sdk.des.model.param;
 
+import com.alibaba.fastjson.JSON;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -35,7 +36,7 @@ public class HeartbeatReq implements Serializable {
     private String signature;
 
     public String toSignatureString() {
-        return String.format("%s|%s|%s|%s", account, products, queryUrl, timestamp);
+        return String.format("%s|%s|%s|%s", account, JSON.toJSONString(products), queryUrl, timestamp);
     }
 
 }
