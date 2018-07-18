@@ -20,10 +20,14 @@ public class LoanInfo {
      */
     private String platform;
     /**
-     * 数据源-平台名称
+     * 平台名称
      */
-    @JSONField(name = "platform_name")
     private String platformName;
+    /**
+     * 借款数据来源appId
+     */
+    @JSONField(name = "app_id")
+    private String appId;
     /**
      * 个人信用
      */
@@ -56,9 +60,10 @@ public class LoanInfo {
 
     /**
      * 生成待签名字符串
+     *
      * @return
      */
-    public String toSignatureStr(){
-        return String.format("%s|%d|%d|%s|%s|%s|%.2f",platform,loanType,loanStatus,loanAmount,contractDate,repayStatus,arrears);
+    public String toSignatureStr() {
+        return String.format("%s|%s|%d|%d|%s|%s|%s|%.2f", platform, appId, loanType, loanStatus, loanAmount, contractDate, repayStatus, arrears);
     }
 }
