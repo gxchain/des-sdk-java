@@ -50,6 +50,6 @@ public class GetTokenParam {
         for (LoanInfo loanInfo: loanInfos){
             stringBuilder.append(loanInfo.toSignatureStr()).append("|");
         }
-        return String.format("%s|%s|$s|%s",requestId,timestamp,redirectUrl,stringBuilder.toString());
+        return String.format("%s|%s|%s|%s",requestId,timestamp,redirectUrl,stringBuilder.toString());
     }
 }

@@ -6,7 +6,7 @@
 
     <groupId>com.gxb.des</groupId>
     <artifactId>des-sdk</artifactId>
-    <version>1.0.7-RELEASE</version>
+    <version>1.0.8-RELEASE</version>
     <packaging>jar</packaging>
 
     <name>des-sdk</name>
@@ -74,8 +74,8 @@
     <distributionManagement>
         <repository>
             <id>nexus-releases</id>
-            <url>https://repo.gxchain.cn/repository/maven-releases/</url>
-            <!--<url>http://192.168.1.122:8081/repository/maven-releases/</url>-->
+            <!--<url>https://repo.gxchain.cn/repository/maven-releases/</url>-->
+            <url>http://192.168.1.122:8081/repository/maven-releases/</url>
         </repository>
         <snapshotRepository>
             <id>nexus-snapshots</id>
