@@ -4,19 +4,20 @@ data exchange service sdk
 # Install
 dependency setting：
 ```
-Added to the maven settings.xml
-<mirror>
-    <id>gxchain</id>
-    <mirrorOf>*</mirrorOf>
-    <url>http://repo.gxchain.cn/repository/maven-public/</url>
-</mirror>
-
 Added to the pom.xml
 <dependency>
     <groupId>com.gxb.des</groupId>
     <artifactId>des-sdk</artifactId>
     <version>1.0.4-RELEASE</version>
 </dependency>
+
+then add a repository to pom.xml
+<repositories>
+    <repository>
+        <id>gxchain</id>
+        <url>http://repo.gxchain.cn/repository/maven-public/</url>
+    </repository>
+<repositories>
 ```
 # Usage
 ### merchant
